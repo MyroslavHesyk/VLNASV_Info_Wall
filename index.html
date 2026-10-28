@@ -7,8 +7,8 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Військовий ліцей — інформаційний екран</title>
 <link rel="icon" type="image/png" href="assets/crest.png">
-<link rel="stylesheet" href="assets/fonts.css?v=4">
-<link rel="stylesheet" href="assets/app.css?v=4">
+<link rel="stylesheet" href="assets/fonts.css?v=5">
+<link rel="stylesheet" href="assets/app.css?v=5">
 </head>
 <body class="state-unknown">
 <div class="wall-shell">
@@ -29,7 +29,7 @@
 </header>
 <div class="command-strip">
   <span class="gold-mark" aria-hidden="true">■</span>
-  <span>ІНФОРМАЦІЙНИЙ ЕКРАН / ПОВІТРЯНА БЕЗПЕКА</span>
+  <span id="danger-strip-message">ІНФОРМАЦІЙНИЙ ЕКРАН / ПОВІТРЯНА БЕЗПЕКА</span>
   <span class="strip-spacer"></span>
   <strong id="connection-label">ОЧІКУВАННЯ ДАНИХ</strong>
   <span id="connection-light" class="status-light"></span>
@@ -76,6 +76,8 @@
         <div><div class="alert-label" id="alert-label">МІСЦЕВИЙ СТАТУС</div><h2 class="alert-headline" id="alert-headline">СТАТУС<br>НЕВІДОМИЙ</h2></div>
       </div>
       <p id="alert-description" class="alert-description">Очікуємо на актуальні дані.</p>
+      <div class="alarm-intro-meter" aria-hidden="true"><div id="alarm-intro-progress"></div></div>
+      <div id="alarm-intro-indicator" class="alarm-intro-indicator" hidden>ПЕРШІ ХВИЛИНИ ТРИВОГИ</div>
       <div class="alert-details"><span>ЛОКАЦІЯ <strong>м. Шептицький</strong></span><span>СТАНОМ НА <strong id="local-time">—</strong></span></div>
     </section>
     <section class="weather-card surface">
@@ -110,7 +112,7 @@
 </section>
 </div>
 <div id="demo-watermark" class="demo-watermark" hidden>ДЕМОНСТРАЦІЯ · НЕ РЕАЛЬНА ТРИВОГА</div>
-<script src="assets/config.js?v=4" defer></script>
-<script src="assets/app.js?v=4" defer></script>
+<script src="assets/config.js?v=5" defer></script>
+<script src="assets/app.js?v=5" defer></script>
 </body>
 </html>
