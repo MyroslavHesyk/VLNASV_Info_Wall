@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4D4634">
+<meta name="robots" content="noindex,nofollow">
+<title>Військовий ліцей — інформаційний екран</title>
+<link rel="icon" type="image/png" href="assets/crest.png">
+<link rel="stylesheet" href="assets/fonts.css?v=4">
+<link rel="stylesheet" href="assets/app.css?v=4">
+</head>
+<body class="state-unknown">
+<div class="wall-shell">
+<header class="masthead">
+  <div class="brand-group">
+    <img src="assets/crest.png" alt="Герб військового ліцею" class="crest">
+    <div class="brand-text">
+      <h1>ВІЙСЬКОВИЙ ЛІЦЕЙ</h1>
+      <div class="institution-tail">НАЦІОНАЛЬНОЇ АКАДЕМІЇ СУХОПУТНИХ ВІЙСЬК</div>
+      <div class="institution-tail">ІМЕНІ ГЕТЬМАНА ПЕТРА САГАЙДАЧНОГО</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="top-location"><span class="spot-mini"></span>ШЕПТИЦЬКИЙ <span class="slash">/</span> ЛЬВІВСЬКА ОБЛАСТЬ</div>
+    <div id="clock" class="clock">--:--<span class="seconds">:--</span></div>
+    <div id="date" class="date">—</div>
+  </div>
+</header>
+<div class="command-strip">
+  <span class="gold-mark" aria-hidden="true">■</span>
+  <span>ІНФОРМАЦІЙНИЙ ЕКРАН / ПОВІТРЯНА БЕЗПЕКА</span>
+  <span class="strip-spacer"></span>
+  <strong id="connection-label">ОЧІКУВАННЯ ДАНИХ</strong>
+  <span id="connection-light" class="status-light"></span>
+</div>
+<main class="layout">
+  <section class="map-panel surface" aria-label="Карта повітряних тривог України">
+    <div class="panel-heading">
+      <div><div class="overline">01 / УКРАЇНА</div><h2>Карта повітряних тривог</h2></div>
+      <div class="map-meta">ОБЛАСТІ ТА РАЙОНИ · АВТООНОВЛЕННЯ</div>
+    </div>
+    <div class="map-frame">
+      <div class="map-bg-grid" aria-hidden="true"></div>
+      <svg id="ukraine-map" viewBox="35 45 810 485" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Карта областей і районів України. Назви областей приховані.">
+        <g id="oblasts-layer"></g>
+        <g id="districts-layer"></g>
+        <g id="borders-layer"></g>
+        <g id="map-pin-layer" aria-label="Розташування ліцею">
+          <circle id="pin-halo" cx="0" cy="0" r="15" class="pin-halo"/>
+          <circle id="pin-main" cx="0" cy="0" r="6" class="pin-main"/>
+          <circle id="pin-core" cx="0" cy="0" r="2" class="pin-core"/>
+        </g>
+      </svg>
+      <div id="map-message" class="map-message">Завантаження географічних даних…</div>
+    </div>
+    <div class="legend-row">
+      <div><i class="legend-square red"></i> ЧЕРВОНИЙ РІВЕНЬ</div>
+      <div><i class="legend-square yellow"></i> ЖОВТИЙ РІВЕНЬ / БПЛА</div>
+      <div><i class="legend-square idle"></i> НЕ ЗАФІКСОВАНО</div>
+      <div><i class="legend-dot"></i> ЛІЦЕЙ</div>
+    </div>
+    <div class="map-foot">
+      <span>ОНОВЛЕННЯ <strong id="map-time">—</strong></span>
+      <span id="map-stats">—</span>
+      <span>ДЖЕРЕЛО: <a href="https://tryvoha.online/api" target="_blank" rel="noopener noreferrer">TRYVOHA.ONLINE</a> · <a href="https://github.com/Astaryon/UA_geojson" target="_blank" rel="noopener noreferrer">ГЕОДАНІ</a></span>
+    </div>
+  </section>
+  <aside class="sidebar">
+    <section class="alert-card surface" id="alert-card" aria-live="polite">
+      <div class="card-heading"><span>02 / ЛОКАЛЬНИЙ СТАТУС</span><span class="live-mark" id="live-mark">● ОЧІКУВАННЯ</span></div>
+      <div class="alert-content">
+        <div id="alert-icon" class="alert-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M32 8 60 56H4L32 8Z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M32 25v15" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="47" r="2.5" fill="currentColor"/></svg>
+        </div>
+        <div><div class="alert-label" id="alert-label">МІСЦЕВИЙ СТАТУС</div><h2 class="alert-headline" id="alert-headline">СТАТУС<br>НЕВІДОМИЙ</h2></div>
+      </div>
+      <p id="alert-description" class="alert-description">Очікуємо на актуальні дані.</p>
+      <div class="alert-details"><span>ЛОКАЦІЯ <strong>м. Шептицький</strong></span><span>СТАНОМ НА <strong id="local-time">—</strong></span></div>
+    </section>
+    <section class="weather-card surface">
+      <div class="card-heading"><span>03 / ПОГОДА ЗАРАЗ</span><span class="weather-update" id="weather-time">—</span></div>
+      <div class="weather-main">
+        <div><div class="weather-city">ШЕПТИЦЬКИЙ</div><div id="temperature" class="temperature">--<sup>°</sup></div></div>
+        <div id="weather-symbol" class="weather-symbol" aria-hidden="true">◌</div>
+      </div>
+      <div id="weather-description" class="weather-description">Отримання прогнозу…</div>
+      <div class="weather-details"><span>ВІДЧУВАЄТЬСЯ <b id="feels-like">—</b></span><span>ВІТЕР <b id="wind">—</b></span></div>
+      <div class="forecast-heading">ПРОГНОЗ НА 5 ДНІВ</div>
+      <div class="forecast-row" id="forecast-row"><div class="forecast-empty">Прогноз завантажується</div></div>
+    </section>
+  </aside>
+</main>
+<section class="schedule surface" aria-label="Розпорядок дня на сьогодні">
+  <div class="schedule-head">
+    <div class="schedule-title"><div class="overline">04 / 2026–2027 НАВЧАЛЬНИЙ РІК</div><h2>Розпорядок дня</h2></div>
+    <div class="schedule-day" id="schedule-day">—</div>
+    <div class="current-block"><span class="current-kicker" id="schedule-status-caption">ЗАРАЗ</span><strong id="schedule-status">—</strong></div>
+    <div class="next-block" id="schedule-next">Визначення поточного заходу…</div>
+  </div>
+  <div class="timeline-wrap">
+    <div class="timeline" id="timeline" aria-label="Шкала розпорядку дня"></div>
+    <div class="timeline-ruler" id="timeline-ruler" aria-hidden="true"></div>
+  </div>
+  <div class="timeline-foot">
+    <span id="schedule-start-time">07:00</span>
+    <span class="timeline-legend"><i class="tl-lesson"></i> НАВЧАННЯ <i class="tl-routine"></i> ЗАХОДИ <i class="tl-meal"></i> ХАРЧУВАННЯ <i class="tl-study"></i> САМОПІДГОТОВКА / САМОРОЗВИТОК</span>
+    <span id="schedule-end-time">22:00</span>
+  </div>
+</section>
+</div>
+<div id="demo-watermark" class="demo-watermark" hidden>ДЕМОНСТРАЦІЯ · НЕ РЕАЛЬНА ТРИВОГА</div>
+<script src="assets/config.js?v=4" defer></script>
+<script src="assets/app.js?v=4" defer></script>
+</body>
+</html>

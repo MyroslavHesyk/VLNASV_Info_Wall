@@ -1,0 +1,14 @@
+/* UAF Sans / Volja: тільки офіційні файли згідно з правами використання.
+   За замовчуванням browser перевіряє LOCAL installed fonts; 404 немає.
+   Для GitHub Pages після додавання реальних WOFF2 розкоментуйте src:url нижче. */
+@font-face {font-family:"UAF Sans"; src:local("UAF Sans"),local("UAFSans-Regular"); font-weight:400; font-style:normal; font-display:swap;}
+@font-face {font-family:"UAF Sans"; src:local("UAF Sans Medium"),local("UAFSans-Medium"); font-weight:500; font-style:normal; font-display:swap;}
+@font-face {font-family:"UAF Sans"; src:local("UAF Sans Semibold"),local("UAFSans-Semibold"); font-weight:600; font-style:normal; font-display:swap;}
+@font-face {font-family:"UAF Sans"; src:local("UAF Sans Bold"),local("UAFSans-Bold"); font-weight:700; font-style:normal; font-display:swap;}
+@font-face {font-family:"Volja"; src:local("Volja"),local("Volja Regular"); font-weight:400; font-style:normal; font-display:swap;}
+/* Якщо у папці fonts є файли, замініть рядки src для потрібних начерків на:
+   src: url("fonts/UAFSans-Regular.woff2") format("woff2");
+   src: url("fonts/UAFSans-Medium.woff2") format("woff2");
+   src: url("fonts/UAFSans-Semibold.woff2") format("woff2");
+   src: url("fonts/UAFSans-Bold.woff2") format("woff2");
+*/
