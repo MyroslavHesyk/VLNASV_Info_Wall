@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#4D4634">
 <meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://tryvoha.online https://xn--80adds5ajn.online https://api.open-meteo.com https://raw.githubusercontent.com https://cdn.jsdelivr.net; font-src 'self' data:; object-src 'none'; base-uri 'self'">
 <title>Військовий ліцей — інформаційний екран</title>
 <link rel="icon" type="image/png" href="assets/crest.png">
-<link rel="stylesheet" href="assets/fonts.css?v=5">
-<link rel="stylesheet" href="assets/app.css?v=5">
+<link rel="stylesheet" href="assets/fonts.css?v=1">
+<link rel="stylesheet" href="assets/app.css?v=8">
 </head>
 <body class="state-unknown">
 <div class="wall-shell">
@@ -38,7 +40,7 @@
   <section class="map-panel surface" aria-label="Карта повітряних тривог України">
     <div class="panel-heading">
       <div><div class="overline">01 / УКРАЇНА</div><h2>Карта повітряних тривог</h2></div>
-      <div class="map-meta">ОБЛАСТІ ТА РАЙОНИ · АВТООНОВЛЕННЯ</div>
+      <!-- <div class="map-meta">ОБЛАСТІ ТА РАЙОНИ · АВТООНОВЛЕННЯ</div> -->
     </div>
     <div class="map-frame">
       <div class="map-bg-grid" aria-hidden="true"></div>
@@ -46,6 +48,7 @@
         <g id="oblasts-layer"></g>
         <g id="districts-layer"></g>
         <g id="borders-layer"></g>
+        <g id="capital-layer" aria-label="Окрема позначка міста Києва"></g>
         <g id="map-pin-layer" aria-label="Розташування ліцею">
           <circle id="pin-halo" cx="0" cy="0" r="15" class="pin-halo"/>
           <circle id="pin-main" cx="0" cy="0" r="6" class="pin-main"/>
@@ -58,12 +61,13 @@
       <div><i class="legend-square red"></i> ЧЕРВОНИЙ РІВЕНЬ</div>
       <div><i class="legend-square yellow"></i> ЖОВТИЙ РІВЕНЬ / БПЛА</div>
       <div><i class="legend-square idle"></i> НЕ ЗАФІКСОВАНО</div>
-      <div><i class="legend-dot"></i> ЛІЦЕЙ</div>
+      <div><i class="legend-dot"></i> ВІЙСЬКОВИЙ ЛІЦЕЙ НАСВ</div>
+      
     </div>
     <div class="map-foot">
       <span>ОНОВЛЕННЯ <strong id="map-time">—</strong></span>
       <span id="map-stats">—</span>
-      <span>ДЖЕРЕЛО: <a href="https://tryvoha.online/api" target="_blank" rel="noopener noreferrer">TRYVOHA.ONLINE</a> · <a href="https://github.com/Astaryon/UA_geojson" target="_blank" rel="noopener noreferrer">ГЕОДАНІ</a></span>
+      <span>ТРИВОГИ: <a href="https://tryvoha.online/api" target="_blank" rel="noopener noreferrer">TRYVOHA.ONLINE</a> · КАРТА: <a href="https://github.com/Astaryon/UA_geojson" target="_blank" rel="noopener noreferrer">UA_GEOJSON · CC BY 4.0</a></span>
     </div>
   </section>
   <aside class="sidebar">
@@ -76,8 +80,8 @@
         <div><div class="alert-label" id="alert-label">МІСЦЕВИЙ СТАТУС</div><h2 class="alert-headline" id="alert-headline">СТАТУС<br>НЕВІДОМИЙ</h2></div>
       </div>
       <p id="alert-description" class="alert-description">Очікуємо на актуальні дані.</p>
-      <div class="alarm-intro-meter" aria-hidden="true"><div id="alarm-intro-progress"></div></div>
-      <div id="alarm-intro-indicator" class="alarm-intro-indicator" hidden>ПЕРШІ ХВИЛИНИ ТРИВОГИ</div>
+      <div id="alarm-intro-indicator" class="alarm-intro-indicator" hidden>ПОЧАТОК ТРИВОГИ</div>
+      <div class="alarm-intro-meter" id="alarm-intro-meter" hidden aria-hidden="true"><div id="alarm-intro-progress"></div></div>
       <div class="alert-details"><span>ЛОКАЦІЯ <strong>м. Шептицький</strong></span><span>СТАНОМ НА <strong id="local-time">—</strong></span></div>
     </section>
     <section class="weather-card surface">
@@ -90,6 +94,20 @@
       <div class="weather-details"><span>ВІДЧУВАЄТЬСЯ <b id="feels-like">—</b></span><span>ВІТЕР <b id="wind">—</b></span></div>
       <div class="forecast-heading">ПРОГНОЗ НА 5 ДНІВ</div>
       <div class="forecast-row" id="forecast-row"><div class="forecast-empty">Прогноз завантажується</div></div>
+      <div class="weather-source">ДАНІ ПОГОДИ: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">OPEN-METEO</a></div>
+    </section>
+    <section class="birthday-card surface" id="birthday-banner" hidden aria-live="polite">
+      <div class="birthday-card-heading">
+        <div class="birthday-heading-left">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c.8 1.4 2.1 2.2 2.1 3.6a2.1 2.1 0 0 1-4.2 0c0-1.4 1.3-2.2 2.1-3.6ZM4 11.5h16v9H4zM2.5 9h19v3h-19zM7 14v3m5-3v3m5-3v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="birthday-caption">СЬОГОДНІ ДЕНЬ НАРОДЖЕННЯ СВЯТКУЮТЬ</span>
+        </div>
+        <div class="birthday-heading-right">
+          <span id="birthday-count"></span>
+          <span id="birthday-page" hidden></span>
+        </div>
+      </div>
+      <div id="birthday-list" class="birthday-list"></div>
     </section>
   </aside>
 </main>
@@ -104,15 +122,30 @@
     <div class="timeline" id="timeline" aria-label="Шкала розпорядку дня"></div>
     <div class="timeline-ruler" id="timeline-ruler" aria-hidden="true"></div>
   </div>
-  <div class="timeline-foot">
+<!--   <div class="timeline-foot">
     <span id="schedule-start-time">07:00</span>
     <span class="timeline-legend"><i class="tl-lesson"></i> НАВЧАННЯ <i class="tl-routine"></i> ЗАХОДИ <i class="tl-meal"></i> ХАРЧУВАННЯ <i class="tl-study"></i> САМОПІДГОТОВКА / САМОРОЗВИТОК</span>
     <span id="schedule-end-time">22:00</span>
-  </div>
+  </div> -->
 </section>
 </div>
+<div id="minute-silence-overlay" class="minute-silence-overlay" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Загальнонаціональна хвилина мовчання">
+  <div class="minute-silence-panel">
+    <div id="silence-demo-label" class="silence-demo-label" hidden>ТЕСТОВИЙ РЕЖИМ</div>
+    <div class="silence-kicker">ЩОДНЯ О 09:00</div>
+   <svg class="silence-candle" viewBox="0 0 64 78" aria-hidden="true">
+  <!-- Полум'я, ґніт та тіло свічки -->
+  <path d="M32 4 C38 14 38 22 32 28 C26 22 26 14 32 4 Z M31 28 H33 V33 H31 Z M22 33 Q22 31 24 31 H40 Q42 31 42 33 V68 Q42 75 32 75 Q22 75 22 68 Z" fill="currentColor"/>
+</svg>
+    <h2 class="silence-title">ЗАГАЛЬНОНАЦІОНАЛЬНА<br>ХВИЛИНА МОВЧАННЯ</h2>
+    <p class="silence-subtitle">ВШАНУЙМО ПАМ’ЯТЬ ЗАГИБЛИХ ЗА УКРАЇНУ</p>
+    <div class="silence-time">09:00 — 09:01</div>
+    <div class="silence-progress" aria-hidden="true"><div id="minute-silence-progress"></div></div>
+  </div>
+</div>
 <div id="demo-watermark" class="demo-watermark" hidden>ДЕМОНСТРАЦІЯ · НЕ РЕАЛЬНА ТРИВОГА</div>
-<script src="assets/config.js?v=5" defer></script>
-<script src="assets/app.js?v=5" defer></script>
+<script src="assets/config.js?v=1"></script>
+<script src="assets/geo-aliases.js?v=8"></script>
+<script src="assets/app.js?v=8" defer></script>
 </body>
 </html>

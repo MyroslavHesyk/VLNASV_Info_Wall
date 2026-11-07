@@ -1,17 +1,40 @@
-/* Static configuration; no secrets or API keys. */
+/* Static configuration for GitHub Pages. No secrets belong in this file. */
 window.WALL_CONFIG = {
+  "institution": "Військовий ліцей Національної академії сухопутних військ імені гетьмана Петра Сагайдачного",
   "place": "Шептицький",
+  "oblast": "Львівська область",
   "oblastSlug": "lvivska",
   "lat": 50.39403,
   "lon": 24.23935,
   "timezone": "Europe/Kyiv",
-  "geometryLocal": false,
   "districtPatterns": [
     "шептицьк",
     "червоноградськ",
     "sheptytsk",
     "chervonohrad"
   ],
+  "shelterUrl": "",
+  "api": {
+    "alertsUrl": "https://tryvoha.online/api/v1/alerts",
+    "alertsFallbackUrl": "https://xn--80adds5ajn.online/api/v1/alerts",
+    "weatherUrl": "https://api.open-meteo.com/v1/forecast",
+    "geometry": {
+      "oblasts": [
+        "https://raw.githubusercontent.com/Astaryon/UA_geojson/main/regiony.geojson",
+        "https://cdn.jsdelivr.net/gh/Astaryon/UA_geojson@main/regiony.geojson"
+      ],
+      "districts": [
+        "https://raw.githubusercontent.com/Astaryon/UA_geojson/main/rayony.geojson",
+        "https://cdn.jsdelivr.net/gh/Astaryon/UA_geojson@main/rayony.geojson"
+      ]
+    }
+  },
+  "refresh": {
+    "alertsMs": 30000,
+    "weatherMs": 600000,
+    "birthdaysMs": 900000,
+    "staleAfterMs": 210000
+  },
   "schedules": {
     "weekday": {
       "title": "Понеділок — п’ятниця",
